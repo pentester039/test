@@ -14,6 +14,10 @@
             <id>jitpack.io</id>
             <url>https://jitpack.io</url>
         </repository>
+        <repository>
+            <id>sonatype</id>
+            <url>https://oss.sonatype.org/content/repositories/releases/</url>
+        </repository>
     </repositories>
     
     <groupId>com.ErasureCode</groupId>
@@ -116,6 +120,15 @@
             <artifactId>webapp-runner</artifactId>
             <version>9.0.27.1</version>
             <scope>provided</scope>
+        </dependency>
+        
+        <!-- COS (com.oreilly.servlet) for MultipartRequest -->
+        <dependency>
+            <groupId>com.oreilly.servlet</groupId>
+            <artifactId>cos</artifactId>
+            <version>20140414</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/cos.jar</systemPath>
         </dependency>
     </dependencies>
     
