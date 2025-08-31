@@ -1,0 +1,12 @@
+[build]
+builder = "nixpacks"
+
+[deploy]
+startCommand = "java -jar target/File_Handling_and_Duplication-1.0.war"
+healthcheckPath = "/"
+healthcheckTimeout = 300
+restartPolicyType = "on_failure"
+
+[env]
+JAVA_VERSION = "11"
+TOMCAT_VERSION = "9.0.65"

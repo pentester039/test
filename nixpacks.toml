@@ -1,0 +1,11 @@
+[phases.setup]
+nixPkgs = ["jdk11", "maven", "tomcat9"]
+
+[phases.install]
+cmds = ["mvn clean package -DskipTests"]
+
+[phases.build]
+cmds = ["mvn war:war"]
+
+[start]
+cmd = "java -jar target/File_Handling_and_Duplication-1.0.war"
