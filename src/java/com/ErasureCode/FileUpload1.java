@@ -21,6 +21,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import com.ErasureCode.DatabaseConfig;
 
 /**
  *
@@ -156,8 +157,7 @@ public class FileUpload1 extends HttpServlet {
                
                
                
-            Class.forName("com.mysql.jdbc.Driver");
-            con=DriverManager.getConnection("jdbc:mysql://localhost:3306/erasurecode","root","password");
+                    con = DatabaseConfig.getConnection();
             st=con.createStatement();
             rs=st.executeQuery("Select * from registration where username='"+Username+"' and password='"+Password+"'");
             

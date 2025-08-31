@@ -28,6 +28,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import com.ErasureCode.DatabaseConfig;
 
 /**
  *
@@ -98,10 +99,12 @@ public class UserRegistrationForm extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-          HttpSession session1=request.getSession();
-            Connection con=null;
-            Statement st=null;
-            ResultSet rs1=null;
+        response.setContentType("text/html;charset=UTF-8");
+        PrintWriter out = response.getWriter();
+        HttpSession session1=request.getSession();
+        Connection con=null;
+        Statement st=null;
+        ResultSet rs1=null;
             
         try
         {
@@ -122,8 +125,7 @@ public class UserRegistrationForm extends HttpServlet {
             
             
             
-             Class.forName("com.mysql.jdbc.Driver");
-          con=DriverManager.getConnection("jdbc:mysql://localhost:3306/erasurecode","root","password");
+             con = DatabaseConfig.getConnection();
           st=con.createStatement();
           
            int rs=st.executeUpdate("Insert into registration(username,password,gender,email,phoneno,userproductkey) VALUES('"+reguser+"','"+regpws+"','"+gender+"','"+regemail+"','"+regpno+"','"+Key+"')");
@@ -143,7 +145,7 @@ public class UserRegistrationForm extends HttpServlet {
             
           
           
-        final String  from="hariraman692@gmail.com;
+        final String  from="hariraman692@gmail.com";
       final String password="hariram3118";
       Session session = Session.getInstance(properties, new javax.mail.Authenticator() 
          {
@@ -176,6 +178,14 @@ public class UserRegistrationForm extends HttpServlet {
         } catch(Exception ex)
         {
             ex.printStackTrace();
+        } finally {
+            try {
+                if (rs1 != null) rs1.close();
+                if (st != null) st.close();
+                if (con != null) con.close();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
     }
 

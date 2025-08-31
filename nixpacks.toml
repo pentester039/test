@@ -1,11 +1,11 @@
 [phases.setup]
-nixPkgs = ["jdk11", "maven", "tomcat9"]
+nixPkgs = ["jdk11", "maven"]
 
 [phases.install]
 cmds = ["mvn clean package -DskipTests"]
 
 [phases.build]
-cmds = ["mvn war:war"]
+cmds = ["mvn dependency:copy-dependencies"]
 
 [start]
-cmd = "java -jar target/File_Handling_and_Duplication-1.0.war"
+cmd = "java -jar target/dependency/webapp-runner.jar --port $PORT target/File_Handling_and_Duplication-1.0.war"
