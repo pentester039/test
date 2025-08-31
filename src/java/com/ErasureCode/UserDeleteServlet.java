@@ -3,8 +3,10 @@
  * and open the template in the editor.
  */
 package com.ErasureCode;
-import com .commondb.Common_DB;
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.Statement;
+import java.sql.ResultSet;
+import com.ErasureCode.DatabaseConfig;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
@@ -94,7 +96,10 @@ public class UserDeleteServlet extends HttpServlet {
 //            String qry="select * groupname where groupname='"+gname+"' and product='"+groupkey+"'";
 //            rs=st.executeQuery(qry);
 //            System.out.println("AAAAAAAAAA"+qry);
-             ResultSet rs1=Common_DB.LoginCheck("erasurecode", "registration", "username","userproductkey",gname,groupkey); 
+             con = DatabaseConfig.getConnection();
+             st = con.createStatement();
+             String qry = "SELECT * FROM registration WHERE username='" + gname + "' AND userproductkey='" + groupkey + "'";
+             rs1 = st.executeQuery(qry); 
              System.out.println("AAAAAAAAAA"+gname+groupkey);
             if(rs1.next())
             {

@@ -79,12 +79,7 @@
             <version>2.11.0</version>
         </dependency>
         
-        <!-- COS Multipart -->
-        <dependency>
-            <groupId>servlets.com</groupId>
-            <artifactId>cos</artifactId>
-            <version>05Nov2002</version>
-        </dependency>
+
         
         <!-- iText for PDF -->
         <dependency>

@@ -5,10 +5,11 @@
  */
 package com.ErasureCode;
 
-import com.commondb.Common_DB;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.Connection;
 import java.sql.ResultSet;
+import java.sql.Statement;
 import java.util.Properties;
 import javax.mail.Message;
 import javax.mail.Multipart;
@@ -24,6 +25,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import com.ErasureCode.DatabaseConfig;
 
 /**
  *
@@ -109,17 +111,25 @@ static Properties properties = new Properties();
      //Common_DB.InsertTable("mona", "INSERT INTO group (groupname) VALUES (groupname)");
 
        
-    int k=Common_DB.InsertTable("erasurecode","INSERT INTO sharingreg(UserName,Password,Email,receiver,mobile_number,userproductkey) VALUES('"+reguser+"','"+regpass+"','"+regemail+"','"+receiver+"','"+mobile_number+"','"+key+"')");
-    if(k>0)  
-    {
-//    String query="CREATE TABLE IF NOT EXISTS "+group+"(username varchar(50) PRIMARY KEY NOT NULL, privatekey blob , publickey blob)";
-//    System.out.println(query);
-//    int q1=Common_DB.InsertTable("mona","USE mona");
-//    int q=Common_DB.InsertTable("mona",query);
-//    System.out.println("********"+q);
-//     if(q==0)
-//     {
-        ResultSet gp=Common_DB.ViewParticularData("erasurecode","sharingreg","receiver",receiver);
+        Connection con = null;
+        Statement st = null;
+        int k = 0;
+        
+        try {
+            con = DatabaseConfig.getConnection();
+            st = con.createStatement();
+            String insertQuery = "INSERT INTO sharingreg(UserName,Password,Email,receiver,mobile_number,userproductkey) VALUES('"+reguser+"','"+regpass+"','"+regemail+"','"+receiver+"','"+mobile_number+"','"+key+"')";
+            k = st.executeUpdate(insertQuery);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        
+        if(k>0)  
+        {
+            ResultSet gp = null;
+            try {
+                String selectQuery = "SELECT * FROM sharingreg WHERE receiver='" + receiver + "'";
+                gp = st.executeQuery(selectQuery);
         if(gp.next()){            
         String key1=gp.getString(6);
          System.out.println("fffffffffffffffffffffffff"+key);
@@ -172,6 +182,15 @@ static Properties properties = new Properties();
         {
             ex.printStackTrace();
             response.sendRedirect("userexist.jsp");
+        }
+        finally {
+            try {
+                if (gp != null) gp.close();
+                if (st != null) st.close();
+                if (con != null) con.close();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
         
     }

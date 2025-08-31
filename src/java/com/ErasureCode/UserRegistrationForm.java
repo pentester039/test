@@ -7,9 +7,9 @@ package com.ErasureCode;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import static java.lang.System.out;
+
 import java.sql.Connection;
-import java.sql.DriverManager;
+
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.Properties;

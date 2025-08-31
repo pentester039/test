@@ -5,10 +5,11 @@
  */
 package com.ErasureCode;
 
-import com.commondb.Common_DB;
 import java.io.*;
 import java.security.Key;
+import java.sql.Connection;
 import java.sql.ResultSet;
+import java.sql.Statement;
 import java.util.List;
 import javax.crypto.SecretKey;
 import javax.crypto.spec.SecretKeySpec;
@@ -20,6 +21,7 @@ import javax.servlet.http.HttpSession;
 import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
+import com.ErasureCode.DatabaseConfig;
 
 /**
  *
@@ -43,21 +45,32 @@ public class FileUpload2 extends HttpServlet {
          
          
      private static Key generateKey(String productkey) throws Exception {
-
-    
-     
-      System.out.println("Run time aggruments"+productkey);
+        System.out.println("Run time aggruments"+productkey);
         String keyValue = "";
-        ResultSet rs1 = Common_DB.ViewParticularData("erasurecode", "registration", "userproductkey", productkey);
-        String group2 = "";
-        if (rs1.next()) {
-            group2 = rs1.getString("userproductkey");
+        
+        Connection con = null;
+        Statement st = null;
+        ResultSet rs1 = null;
+        
+        try {
+            con = DatabaseConfig.getConnection();
+            st = con.createStatement();
+            String qry = "SELECT * FROM registration WHERE userproductkey='" + productkey + "'";
+            rs1 = st.executeQuery(qry);
             
-            System.out.println(" deva head key =="+group2);
+            String group2 = "";
+            if (rs1.next()) {
+                group2 = rs1.getString("userproductkey");
+                System.out.println(" deva head key =="+group2);
+            }
+            System.out.println("WWWWWWWWWW" + group2);
+            Key key = new SecretKeySpec(group2.getBytes(), "AES");
+            return key;
+        } finally {
+            if (rs1 != null) try { rs1.close(); } catch (Exception e) {}
+            if (st != null) try { st.close(); } catch (Exception e) {}
+            if (con != null) try { con.close(); } catch (Exception e) {}
         }
-        System.out.println("WWWWWWWWWW" + group2);
-        Key key = new SecretKeySpec(group2.getBytes(), "AES");
-        return key;
     }
 
     /**
