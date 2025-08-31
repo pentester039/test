@@ -84,11 +84,13 @@ public class FileUpload1 extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-      Connection con=null;
+        response.setContentType("text/html;charset=UTF-8");
+        PrintWriter out = response.getWriter();
+        Connection con=null;
         Statement st=null;
         ResultSet rs=null;
         
-           HttpSession session1=request.getSession();
+        HttpSession session1=request.getSession();
         
       
            

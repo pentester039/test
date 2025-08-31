@@ -25,7 +25,6 @@ import javax.servlet.http.*;
  * @author Admin
  */
 public class AdminServlet extends HttpServlet {
-    private Object out;
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>

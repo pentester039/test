@@ -80,9 +80,10 @@ public class DownLoadLoginform extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        response.setContentType("text/html;charset=UTF-8");
+        PrintWriter out = response.getWriter();
         
-        
-         HttpSession session1=request.getSession();
+        HttpSession session1=request.getSession();
         
         Connection con=null;
         Statement st=null;
