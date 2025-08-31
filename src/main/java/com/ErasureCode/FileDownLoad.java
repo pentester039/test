@@ -256,7 +256,7 @@ public class FileDownLoad extends HttpServlet {
                             md = MessageDigest.getInstance("MD5");
                         } catch (NoSuchAlgorithmException ex) 
                             {
-                                Logger.getLogger(FileDownLoad.class.getName()).log(Level.SEVERE, null, ex);
+                                LogManager.getLogger(FileDownLoad.class.getName()).log(Level.SEVERE, null, ex);
                             }
                     md.update(data);
                     byte[] hash = md.digest();
@@ -264,7 +264,7 @@ public class FileDownLoad extends HttpServlet {
                             System.out.println("severkey generazsdfgsdfg"+returnHex(hash));
                         } 
                     catch (Exception ex) {
-                             Logger.getLogger(FileDownLoad.class.getName()).log(Level.SEVERE, null, ex);
+                            LogManager.getLogger(FileDownLoad.class.getName()).log(Level.SEVERE, null, ex);
                         }
                 */
     
